@@ -1,0 +1,46 @@
+#! /bin/bash
+
+if [[ ! $1 -gt 0 ]]; then
+    echo \"$1\" is not a valid problem number.
+    exit 1
+fi
+
+echo Testing Project Euler Problem \#$1
+
+problemNumber=$1
+while [[ ${#problemNumber} < 3 ]]; do
+    problemNumber=0$problemNumber
+done
+hsFile=euler$problemNumber.hs
+
+echo Compiling...
+ghc -v0 --make -o heuler.out -O2 $hsFile || exit 1
+rm *.hi
+rm *.o
+
+echo Running...
+output=$(time ./heuler.out)
+rm heuler.out
+echo
+
+result=$(echo $output | tail -n1)
+
+if [[ $result != $output ]]; then
+    echo $output
+    exit 1
+fi
+
+./eulerCheck.sh $1 "$result" > /dev/null
+
+if [[ $? -ne 0 ]]; then
+    echo The answer \"$result\" is incorrect.
+    exit 1
+fi
+
+echo The answer \"$result\" is correct.
+
+suggestions=$(hlint $hsFile)
+if [[ $suggestions != "No suggestions" ]]; then
+    echo
+    echo "$suggestions"
+fi
