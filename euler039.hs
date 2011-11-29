@@ -1,8 +1,7 @@
 import Data.Maybe (catMaybes)
 import qualified Data.Map as M
+import EulerUtils (maybeSqrt)
 
-maybeSqrt n = let root = truncate . sqrt . fromIntegral $ n
-              in if root * root == n then Just root else Nothing
 
 rightTrianglePerimeter a b = fmap (a + b +) $ maybeSqrt (a * a + b * b)
 

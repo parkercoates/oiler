@@ -1,6 +1,7 @@
 module EulerUtils
 (
     divides
+,   maybeSqrt
 
 ,   genericPrimeFactors
 ,   genericIsPrime
@@ -28,6 +29,8 @@ import Data.List (delete, inits, tails)
 
 divides a b = rem b a == 0
 
+maybeSqrt n = let root = round . sqrt . fromIntegral $ n
+              in if root * root == n then Just root else Nothing
 
 -- Primes --------------------------------------------------------------------
 
