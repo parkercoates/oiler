@@ -1,0 +1,28 @@
+#! /bin/bash
+
+echo Testing Project Euler Problem \#$1
+
+problemNumber=$1
+while [[ ${#problemNumber} < 3 ]]; do
+    problemNumber=0$problemNumber
+done
+pyFile=euler$problemNumber.py
+
+
+echo Running...
+output=$(time pypy $pyFile)
+echo
+
+result=$(echo $output | tail -n1)
+
+if [[ $result == $output ]]; then
+    if ./eulerCheck.sh $1 "$result" > /dev/null; then
+        echo The answer \"$result\" is correct.
+    else
+        echo The answer \"$result\" is incorrect.
+        exit 1
+    fi
+else
+    echo $output
+fi
+
