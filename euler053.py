@@ -6,7 +6,9 @@ def fact( n ) :
 	if n in factorials :
 		return factorials[n]
 	else :
-		return n * fact( n - 1 )
+		f = n * fact( n - 1 )
+		factorials[n] = f
+		return f
 
 def nChooseR( n, r ) :
 	return fact( n ) / fact( r ) / fact( n - r )
