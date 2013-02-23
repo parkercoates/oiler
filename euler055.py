@@ -11,4 +11,4 @@ def isLychrel( n ) :
 	else :
 		return True
 
-print len( 1 for i in xrange(1,10000) if isLychrel(i) )
+print len( [1 for i in xrange(1,10000) if isLychrel(i)] )
