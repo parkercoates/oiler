@@ -32,18 +32,21 @@ divides a b = rem b a == 0
 maybeSqrt n = let root = round . sqrt . fromIntegral $ n
               in if root * root == n then Just root else Nothing
 
+
 -- Primes --------------------------------------------------------------------
 
 genericPrimeFactors :: Integral a => a -> [a]
-genericPrimeFactors n = pf n genericPrimes
+genericPrimeFactors n | n < 2     = []
+                      | otherwise = pf n genericPrimes
    where pf n pps@(p:ps)
             | p * p > n     = [n]
             | p `divides` n = p : pf (n `div` p) pps
             | otherwise     = pf n ps
 
 genericIsPrime :: Integral a => a -> Bool
-genericIsPrime n | n < 2     = False
-                  | otherwise = null . tail . genericPrimeFactors $ n
+genericIsPrime n = case genericPrimeFactors n of
+                      [_] -> True
+                      _   -> False
 
 genericPrimes :: Integral a => [a]
 genericPrimes = 2 : filter genericIsPrime [3,5..]
