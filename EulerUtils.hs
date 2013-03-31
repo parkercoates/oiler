@@ -59,7 +59,7 @@ isPrime :: Int -> Bool
 isPrime = genericIsPrime
 
 primes :: [Int]
-primes = genericPrimes
+primes = 2 : filter isPrime [3,5..maxBound]
 
 
 -- Digits --------------------------------------------------------------------
