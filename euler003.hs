@@ -1,4 +1,4 @@
-import EulerUtils (genericPrimeFactors)
+import EulerUtils (primeIntegerFactors)
 
-main = print . last . genericPrimeFactors $ 600851475143
+main = print . last . primeIntegerFactors $ 600851475143
 

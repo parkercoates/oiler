@@ -3,12 +3,12 @@ module EulerUtils
     divides
 ,   maybeSqrt
 
-,   genericPrimeFactors
-,   genericIsPrime
-,   genericPrimes
 ,   primeFactors
 ,   isPrime
 ,   primes
+,   primeIntegerFactors
+,   isPrimeInteger
+,   primeIntegers
 
 ,   revDigitsBase
 ,   digitsBase
@@ -60,6 +60,16 @@ isPrime = genericIsPrime
 
 primes :: [Int]
 primes = 2 : filter isPrime [3,5..maxBound]
+
+
+primeIntegerFactors :: Integer -> [Integer]
+primeIntegerFactors = genericPrimeFactors
+
+isPrimeInteger :: Integer -> Bool
+isPrimeInteger = genericIsPrime
+
+primeIntegers :: [Integer]
+primeIntegers = genericPrimes
 
 
 -- Digits --------------------------------------------------------------------
