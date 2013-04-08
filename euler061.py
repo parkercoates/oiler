@@ -24,15 +24,15 @@ def findCycle( sequence, unusedPolygonalTypes ) :
   for p in unusedPolygonalTypes :
     for i in polygonals[ p ] :
       if i // 100 == sequence[-1] % 100 :
-	if len( unusedPolygonalTypes ) == 1 and i % 100 == sequence[0] // 100 :
-	  sequence.append( i )
-	  print sequence
-	  print "Sum:", sum( sequence )
-	  exit()
-	else :
-	  unused = unusedPolygonalTypes.copy()
-	  unused.remove( p )
-	  findCycle( sequence + [ i ], unused )
+        if len( unusedPolygonalTypes ) == 1 and i % 100 == sequence[0] // 100 :
+          sequence.append( i )
+          print sequence
+          print "Sum:", sum( sequence )
+          exit()
+        else :
+          unused = unusedPolygonalTypes.copy()
+          unused.remove( p )
+          findCycle( sequence + [ i ], unused )
 
 
 for i in polygonals[ 3 ] :
