@@ -1,5 +1,5 @@
 import EulerUtils (fromDigits, revDigits)
-import Data.List (sort)
+import Data.List (sortBy)
 import qualified Data.Map as M
 import Data.Maybe (fromMaybe)
 
@@ -10,7 +10,7 @@ incrementCount key cube m = let (oldValue, m') = M.insertLookupWithKey f key (cu
 
 search :: Integer -> M.Map Integer (Integer, Int) -> Integer
 search i m = let cube = i * i * i
-                 key = fromDigits . reverse . sort . revDigits $ cube
+                 key = fromDigits . sortBy (flip compare) . revDigits $ cube
                  (oldCube, count, m') = incrementCount key cube m
              in if count == 5 then oldCube else search (i+1) m'
 
