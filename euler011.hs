@@ -1,6 +1,7 @@
-
 import Data.Array (Array, listArray, (!))
+import EulerUtils (iSqrt)
 
+str :: String
 str = "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08 \
       \49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00 \
       \81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65 \
@@ -22,9 +23,14 @@ str = "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08 \
       \20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54 \
       \01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"
 
-intList = (map read . words) str :: [Int]
-dim = round . sqrt . fromIntegral . length $ intList
-table = listArray ((1,1),(dim,dim)) intList
+intList :: [Int]
+intList = (map read . words) str
+
+dim :: Int
+dim = iSqrt . length $ intList
+
+grid :: Array (Int,Int) Int
+grid = listArray ((1,1),(dim,dim)) intList
 
 maxProduct :: Real a => Int -> Array (Int,Int) a -> a
 maxProduct len table = maximum $ map maxDirProduct [(1,-1), (1,0), (1,1), (0,1)]
@@ -34,5 +40,6 @@ maxProduct len table = maximum $ map maxDirProduct [(1,-1), (1,0), (1,1), (0,1)]
               where mini = if delta >= 0 then 1 else len
                     maxi = if delta <= 0 then dim else dim-len+1
 
-main = print $ maxProduct 4 table
+main :: IO ()
+main = print $ maxProduct 4 grid
 

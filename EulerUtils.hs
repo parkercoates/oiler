@@ -1,6 +1,7 @@
 module EulerUtils
 (
     divides
+,   iSqrt
 ,   maybeSqrt
 
 ,   primeFactors
@@ -30,8 +31,11 @@ import Data.List (delete, inits, tails)
 divides :: Integral a => a -> a -> Bool
 divides a b = rem b a == 0
 
+iSqrt :: Integral a => a -> a
+iSqrt n = floor . sqrt $ (fromIntegral n :: Double)
+
 maybeSqrt :: Integral a => a -> Maybe a
-maybeSqrt n = let root = round . sqrt . fromIntegral $ n
+maybeSqrt n = let root = iSqrt n
               in if root * root == n then Just root else Nothing
 
 
