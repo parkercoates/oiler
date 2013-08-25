@@ -27,8 +27,10 @@ import Data.List (delete, inits, tails)
 
 -- Math ----------------------------------------------------------------------
 
+divides :: Integral a => a -> a -> Bool
 divides a b = rem b a == 0
 
+maybeSqrt :: Integral a => a -> Maybe a
 maybeSqrt n = let root = round . sqrt . fromIntegral $ n
               in if root * root == n then Just root else Nothing
 
@@ -38,10 +40,11 @@ maybeSqrt n = let root = round . sqrt . fromIntegral $ n
 genericPrimeFactors :: Integral a => a -> [a]
 genericPrimeFactors n | n < 2     = []
                       | otherwise = pf n genericPrimes
-   where pf n pps@(p:ps)
-            | p * p > n     = [n]
-            | p `divides` n = p : pf (n `div` p) pps
-            | otherwise     = pf n ps
+   where pf m pps@(p:ps)
+            | p * p > m     = [m]
+            | p `divides` m = p : pf (m `div` p) pps
+            | otherwise     = pf m ps
+         pf _ []            = error "Ran out of primes!"
 
 genericIsPrime :: Integral a => a -> Bool
 genericIsPrime n = case genericPrimeFactors n of
@@ -98,8 +101,10 @@ fromDigits = fromDigitsBase 10
 
 -- List Manipulation ---------------------------------------------------------
 
+rotations :: [a] -> [[a]]
 rotations xs = tail $ zipWith (++) (tails xs) (inits xs)
 
+lexicalPermutations :: Eq a => [a] -> [[a]]
 lexicalPermutations [] = [[]]
 lexicalPermutations xs = concat [ map (x:) . lexicalPermutations . delete x $ xs | x <- xs ]
 
