@@ -13,34 +13,28 @@ while [[ ${#problemNumber} < 3 ]]; do
 done
 hsFile=euler$problemNumber.hs
 
+echo
 echo Compiling...
-ghc -v0 --make -o heuler.out -O2 $hsFile || exit 1
+echo
+ghc -v0 --make -o heuler.out -O2 -W $hsFile || exit 1
 rm *.hi
 rm *.o
 
+echo
 echo Running...
-output=$(time ./heuler.out)
+echo
+result=$(time ./heuler.out | tee /dev/tty | tail -n1)
 rm heuler.out
 echo
 
-result=$(echo $output | tail -n1)
+intRegex='^-?[0-9]+$'
+[[ $result =~ $intRegex ]] && ./eulerCheck.sh $1 "$result" || exit 1
 
-if [[ $result != $output ]]; then
-    echo $output
-    exit 1
-fi
-
-./eulerCheck.sh $1 "$result" > /dev/null
-
-if [[ $? -ne 0 ]]; then
-    echo The answer \"$result\" is incorrect.
-    exit 1
-fi
-
-echo The answer \"$result\" is correct.
-
-suggestions=$(hlint $hsFile)
-if [[ $suggestions != "No suggestions" ]]; then
+suggestions=$(hlint -n $hsFile)
+if [[ -n $suggestions ]]; then
+    echo
+    echo
+    echo "HLint Suggestions:"
     echo
     echo "$suggestions"
 fi
