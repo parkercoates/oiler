@@ -5,10 +5,11 @@ yourMd5=${yourMd5:0:32}
 
 md5=$(sed -n "$1p" md5solutions.txt)
 
+echo -n "The answer \"$2\" is "
 if [[ $md5 == $yourMd5 ]]; then
-    echo "Correct."
+    echo "correct."
     exit 0
 else
-    echo "Incorrect."
+    echo "incorrect."
     exit 1
 fi
