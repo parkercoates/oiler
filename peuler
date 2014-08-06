@@ -1,5 +1,10 @@
 #! /bin/bash
 
+if [[ ! $1 -gt 0 ]]; then
+    echo \"$1\" is not a valid problem number.
+    exit 1
+fi
+
 echo Testing Project Euler Problem \#$1
 
 problemNumber=$1
@@ -8,21 +13,12 @@ while [[ ${#problemNumber} < 3 ]]; do
 done
 pyFile=euler$problemNumber.py
 
-
+echo
 echo Running...
-output=$(time python2 $pyFile)
+echo
+result=$(time python2 $pyFile | tee /dev/tty | tail -n1)
 echo
 
-result=$(echo $output | tail -n1)
-
-if [[ $result == $output ]]; then
-    if ./eulerCheck.sh $1 "$result" > /dev/null; then
-        echo The answer \"$result\" is correct.
-    else
-        echo The answer \"$result\" is incorrect.
-        exit 1
-    fi
-else
-    echo $output
-fi
+intRegex='^-?[0-9]+$'
+[[ $result =~ $intRegex ]] && ./eulerCheck.sh $1 "$result" || exit 1
 
